@@ -2,20 +2,23 @@
 # coding: utf-8
 
 def Skew(Genome):
-    """Define Skew(Genome) as the difference between the total number of 
+    """Define Skew of Genome as the difference between the total number of 
     occurrences of G and C in the first i nucleotides of Genome, where i 
-    ranges from 0 to |Genome|.
+    ranges from 0 to |Genome|. Let prefix_i of Genome denote a prefix 
+    (i.e, an initial substring) of Genome with length i.
 
-    Genome => A DNA string"""
+    Genome => A DNA string
 
-    # For i = 0, the skew of Genome is 0
+    Return: The list of the skews of Genome at prefix_i, i = 0,...,|Genome|"""
+
+    # For prefix_i = 0, the skew of Genome is 0
     skew = [0]
 
-    # i changes meaning depending on the context.
-    # When applied to Genome it means the ith nucleotide,
-    # and when applied to skew i means the skew of Genome
-    # at the substring of length i (prefix i).
     for i in range(0, len(Genome)):
+        # i changes meaning depending on the context:
+        #   - When applied to Genome it means the ith nucleotide.
+        #   - When applied to skew, i means the skew of Genome
+        #     at prefix_i.
         if Genome[i] == 'C':
             skew.append(skew[i] - 1)
         elif Genome[i] == 'G':
@@ -24,14 +27,22 @@ def Skew(Genome):
             skew.append(skew[i])
     return skew
 
+def minimum_skew(Genome):
+    """Find the position(s) in a genome minimizing the skew.
+
+    Genome => A DNA string
+    Returns: All integer(s) i minimizing Skew(Genome) over all values of i (from 0 to |Genome|)."""
+
+    skew = Skew(Genome)
+    minimal_skew = []
+
+    for i in range(0, len(Genome)):
+        
+
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) == 1:
-        for i in Skew("GAGCCACCGCGATA"):
-            print i,
-        print ""
-    elif len(sys.argv) == 2:
+    if len(sys.argv) == 2:
         with open(sys.argv[1], 'r') as fp:
             Genome = fp.readline().strip('\n')
             print Skew(Genome)[53]
