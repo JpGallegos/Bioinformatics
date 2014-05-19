@@ -34,9 +34,18 @@ def minimum_skew(Genome):
     Returns: All integer(s) i minimizing Skew(Genome) over all values of i (from 0 to |Genome|)."""
 
     skew = Skew(Genome)
-    minimal_skew = []
+    minimal_skew = 0
+    minimal_skew_ints = []
 
     for i in range(0, len(Genome)):
+        current_skew = skew[i]
+        if current_skew == minimal_skew:
+            minimal_skew_ints.append(i)
+        elif current_skew < minimal_skew:
+            minimal_skew = current_skew
+            minimal_skew_ints = []
+            minimal_skew_ints.append(i)
+    return minimal_skew_ints
         
 
 if __name__ == "__main__":
@@ -45,7 +54,9 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         with open(sys.argv[1], 'r') as fp:
             Genome = fp.readline().strip('\n')
-            print Skew(Genome)[53]
+            for skew in minimum_skew(Genome):
+                print skew,
+            print
 
     else:
         print "Usage: skew.py [FILE]"
